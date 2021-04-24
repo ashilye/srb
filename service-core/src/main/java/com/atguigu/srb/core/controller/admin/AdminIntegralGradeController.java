@@ -1,18 +1,15 @@
 package com.atguigu.srb.core.controller.admin;
 
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.atguigu.common.exception.Assert;
-import com.atguigu.common.exception.BusinessException;
 import com.atguigu.common.result.R;
 import com.atguigu.common.result.ResponseEnum;
 import com.atguigu.srb.core.pojo.entity.IntegralGrade;
 import com.atguigu.srb.core.service.IntegralGradeService;
-import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -30,6 +27,7 @@ import java.util.List;
 @CrossOrigin  //跨域
 @RestController
 @RequestMapping("/admin/core/integralGrade")
+@Slf4j
 public class AdminIntegralGradeController {
 
     @Resource
@@ -82,6 +80,7 @@ public class AdminIntegralGradeController {
     public R getById(
             @ApiParam(value = "数据id",required = true,example = "1")
             @PathVariable Long id){
+
         IntegralGrade integralGrade = integralGradeService.getById(id);
         if(integralGrade != null){
             return R.ok().data("record",integralGrade);
