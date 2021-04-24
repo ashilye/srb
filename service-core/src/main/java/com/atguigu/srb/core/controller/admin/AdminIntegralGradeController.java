@@ -2,7 +2,10 @@ package com.atguigu.srb.core.controller.admin;
 
 
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
+import com.atguigu.common.exception.Assert;
+import com.atguigu.common.exception.BusinessException;
 import com.atguigu.common.result.R;
+import com.atguigu.common.result.ResponseEnum;
 import com.atguigu.srb.core.pojo.entity.IntegralGrade;
 import com.atguigu.srb.core.service.IntegralGradeService;
 import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
@@ -45,6 +48,7 @@ public class AdminIntegralGradeController {
     public R removeById(
             @ApiParam(value = "数据id", example = "1",required = true)
             @PathVariable Long id){
+
         boolean result = integralGradeService.removeById(id);
         if(result){
             return R.ok().message("删除成功");
@@ -58,6 +62,13 @@ public class AdminIntegralGradeController {
     public R save(
             @ApiParam(value = "积分等级对象",required = true)
             @RequestBody IntegralGrade integralGrade){
+
+        //使用自定义异常判断数据
+//        if(integralGrade.getBorrowAmount() == null){
+//            throw new BusinessException(ResponseEnum.BORROW_AMOUNT_NULL_ERROR);
+//        }
+        Assert.notNull(integralGrade.getBorrowAmount(), ResponseEnum.BORROW_AMOUNT_NULL_ERROR);
+
         boolean result = integralGradeService.save(integralGrade);
         if(result){
             return R.ok().message("保存成功");
